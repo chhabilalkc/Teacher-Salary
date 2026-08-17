@@ -1,0 +1,1619 @@
+<!DOCTYPE html>
+<html lang="ne" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>नेपाल सरकारी शिक्षक तलब क्याल्कुलेटर २०८३/८४ | Nepal Government Teacher Salary Calculator</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        nepal: {
+                            red: '#C8102E',
+                            darkred: '#9B0B21',
+                            blue: '#003893',
+                            gold: '#D4AF37',
+                            cream: '#FAF9F6',
+                            darkbg: '#0F172A',
+                            carddark: '#1E293B'
+                        }
+                    },
+                    fontFamily: {
+                        devanagari: ['"Noto Sans Devanagari"', 'Kalimati', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    <style>
+        body {
+            font-family: 'Noto Sans Devanagari', sans-serif;
+        }
+
+        .dhaka-bg {
+            background-color: #fdfbf7;
+            background-image: radial-gradient(#c8102e 0.5px, transparent 0.5px), radial-gradient(#003893 0.5px, #fdfbf7 0.5px);
+            background-size: 20px 20px;
+            background-position: 0 0, 10px 10px;
+            background-opacity: 0.03;
+        }
+
+        .dark .dhaka-bg {
+            background-color: #0f172a;
+            background-image: radial-gradient(#c8102e 0.5px, transparent 0.5px), radial-gradient(#38bdf8 0.5px, #0f172a 0.5px);
+            background-size: 20px 20px;
+            background-position: 0 0, 10px 10px;
+        }
+
+        .himalaya-shape {
+            clip-path: polygon(0% 100%, 0% 65%, 15% 40%, 28% 70%, 42% 30%, 58% 60%, 75% 20%, 88% 50%, 100% 25%, 100% 100%);
+        }
+
+        /* Number counter animation */
+        @keyframes countUp {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-value {
+            animation: countUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        /* Print styling rules */
+        @media print {
+            .no-print { display: none !important; }
+            .print-only { display: block !important; }
+            body { background: white !important; color: black !important; font-size: 12pt; }
+            .card-box { border: 1px solid #ccc !important; box-shadow: none !important; }
+        }
+    </style>
+
+<style id="mobile-responsive-enhancements">
+/* ===== Mobile-first enhancements ===== */
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body { overflow-x: hidden; }
+img, svg, canvas { max-width: 100%; height: auto; }
+button, input, select, textarea { font: inherit; }
+button, a { -webkit-tap-highlight-color: transparent; }
+button { min-height: 44px; }
+input, select { min-height: 44px; }
+
+/* Prevent long tables/cards from breaking the viewport */
+.table-scroll, .overflow-x-auto { max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+table { min-width: 680px; }
+
+/* Navigation */
+@media (max-width: 767px) {
+  header, nav, main, footer { max-width: 100vw; }
+  .container, .max-w-7xl, .max-w-6xl, .max-w-5xl { width: 100%; max-width: 100%; }
+
+  /* Compact page spacing */
+  main { padding-left: 12px !important; padding-right: 12px !important; }
+  section { scroll-margin-top: 72px; }
+
+  /* Header/nav */
+  header { position: sticky; top: 0; z-index: 40; }
+  nav { overflow-x: auto; scrollbar-width: none; }
+  nav::-webkit-scrollbar { display: none; }
+
+  /* Hero */
+  h1 { font-size: clamp(1.65rem, 8vw, 2.4rem) !important; line-height: 1.15 !important; }
+  h2 { font-size: clamp(1.3rem, 6vw, 1.8rem) !important; }
+  h3 { font-size: 1.05rem !important; }
+
+  /* Grid layouts collapse cleanly */
+  .grid { min-width: 0; }
+  .grid-cols-2, .md\:grid-cols-2, .lg\:grid-cols-2,
+  .grid-cols-3, .md\:grid-cols-3, .lg\:grid-cols-3,
+  .grid-cols-4, .md\:grid-cols-4, .lg\:grid-cols-4 {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  /* Calculator cards */
+  .rounded-2xl, .rounded-3xl { border-radius: 18px !important; }
+  .p-8 { padding: 18px !important; }
+  .p-7 { padding: 17px !important; }
+  .p-6 { padding: 16px !important; }
+  .p-5 { padding: 14px !important; }
+  .p-4 { padding: 13px !important; }
+
+  /* Inputs and controls */
+  input, select, textarea {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    font-size: 16px !important; /* prevents iOS zoom */
+  }
+
+  /* Button groups */
+  .flex.gap-2, .flex.gap-3, .flex.gap-4 {
+    flex-wrap: wrap;
+  }
+  button { max-width: 100%; }
+
+  /* Results: make the important number prominent */
+  #resNetSalary {
+    font-size: clamp(2rem, 11vw, 3.1rem) !important;
+    line-height: 1.05 !important;
+    word-break: break-word;
+  }
+  #resGrossSalary, #resBasicWithGrade {
+    font-size: clamp(1.25rem, 7vw, 2rem) !important;
+    word-break: break-word;
+  }
+
+  /* Modal */
+  [role="dialog"], .fixed.inset-0 > div {
+    max-height: calc(100dvh - 24px);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Toast */
+  .fixed.bottom-5.right-5 {
+    left: 12px !important;
+    right: 12px !important;
+    bottom: max(12px, env(safe-area-inset-bottom)) !important;
+    width: auto !important;
+    text-align: center;
+    justify-content: center;
+  }
+
+  /* Footer */
+  footer { padding-bottom: calc(20px + env(safe-area-inset-bottom)); }
+
+  /* Saved calculation cards */
+  #savedCalculationsList > div {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
+  /* Make creator/photo area stack */
+  .creator-section { display: flex; flex-direction: column; }
+
+  /* Better touch targets for icon-only controls */
+  .icon-btn, [title="हटाउनुहोस्"] {
+    min-width: 44px;
+    min-height: 44px;
+  }
+}
+
+/* Small phones */
+@media (max-width: 380px) {
+  main { padding-left: 9px !important; padding-right: 9px !important; }
+  .p-8 { padding: 14px !important; }
+  .p-6 { padding: 13px !important; }
+  .text-4xl { font-size: 1.7rem !important; }
+  .text-3xl { font-size: 1.45rem !important; }
+  #resNetSalary { font-size: 2rem !important; }
+}
+
+/* Landscape phones */
+@media (max-width: 900px) and (orientation: landscape) {
+  .hero, section { min-height: auto !important; }
+  .fixed.inset-0 { padding: 8px !important; }
+}
+
+/* Respect reduced-motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: .01ms !important;
+  }
+}
+</style>
+
+<style id="facebook-direct-button-style">
+.facebook-direct-btn{display:inline-flex;align-items:center;justify-content:center;gap:.55rem;min-height:46px;padding:.75rem 1.25rem;border-radius:.8rem;background:#1877F2;color:#fff!important;text-decoration:none!important;font-weight:700;box-shadow:0 8px 20px rgba(24,119,242,.18);transition:.2s ease;}
+.facebook-direct-btn:hover{transform:translateY(-1px);filter:brightness(.96);}
+.facebook-direct-btn span{font-size:1.15rem;font-weight:900;}
+@media(max-width:767px){.facebook-direct-btn{width:100%;max-width:360px;}}
+</style>
+</head>
+<body class="dhaka-bg text-slate-800 dark:text-slate-100 min-h-screen flex flex-col transition-colors duration-200">
+
+    <!-- Top Header Bar -->
+    <header class="bg-nepal-red text-white shadow-md sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                
+                <!-- Left Header identity -->
+                <div class="flex items-center space-x-3 sm:space-x-4">
+                    <div class="text-3xl sm:text-4xl animate-bounce duration-1000">🇳🇵</div>
+                    <div>
+                        <h1 class="text-lg sm:text-2xl font-bold tracking-wide flex items-center gap-2">
+                            नेपाल सरकारी शिक्षक तलब क्याल्कुलेटर
+                        </h1>
+                        <p class="text-xs sm:text-sm text-amber-200 font-medium">
+                            आर्थिक वर्ष २०८३/८४ <span class="hidden sm:inline">| Nepal Government Teacher Salary Calculator</span>
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Right Header Actions -->
+                <div class="flex items-center space-x-2 sm:space-x-3">
+                    <!-- Numeral Toggle -->
+                    <button id="numeralToggleBtn" onclick="toggleNumeralSystem()" class="bg-nepal-darkred hover:bg-black/20 text-white px-2.5 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1 border border-white/20 transition" title="अंक ढाँचा परिवर्तन">
+                        <i class="fa-solid fa-language text-sm"></i>
+                        <span id="numeralLabel">नेपाली अंक</span>
+                    </button>
+
+                    <!-- Dark Mode Toggle -->
+                    <button id="themeToggleBtn" onclick="toggleDarkMode()" class="bg-nepal-darkred hover:bg-black/20 text-white p-2 rounded-lg text-sm border border-white/20 transition" title="डार्क/लाइट मोड">
+                        <i id="themeIcon" class="fa-solid fa-moon"></i>
+                    </button>
+
+                    <!-- Mobile Navigation Hamburger -->
+                    <button onclick="toggleMobileMenu()" class="md:hidden bg-nepal-darkred p-2 rounded-lg text-white border border-white/20 focus:outline-none">
+                        <i class="fa-solid fa-bars text-lg"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation Bar -->
+        <nav class="bg-nepal-blue text-white shadow-inner hidden md:block">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex space-x-6 text-sm font-medium py-2.5">
+                    <a href="#hero" class="hover:text-amber-300 transition flex items-center gap-1.5"><i class="fa-solid fa-house text-xs"></i> गृहपृष्ठ</a>
+                    <a href="#calculator" class="hover:text-amber-300 transition flex items-center gap-1.5"><i class="fa-solid fa-calculator text-xs"></i> तलब क्याल्कुलेटर</a>
+                    <a href="#salary-table" class="hover:text-amber-300 transition flex items-center gap-1.5"><i class="fa-solid fa-table text-xs"></i> तलब तालिका</a>
+                    <a href="#allowances-info" class="hover:text-amber-300 transition flex items-center gap-1.5"><i class="fa-solid fa-coins text-xs"></i> भत्ता विवरण</a>
+                    <a href="#saved-section" class="hover:text-amber-300 transition flex items-center gap-1.5"><i class="fa-solid fa-bookmark text-xs"></i> सुरक्षित गणनाहरू</a>
+                    <a href="#creator-section" class="hover:text-amber-300 transition flex items-center gap-1.5"><i class="fa-solid fa-user-tie text-xs"></i> निर्माता</a>
+                    <a href="#info-section" class="hover:text-amber-300 transition flex items-center gap-1.5"><i class="fa-solid fa-circle-info text-xs"></i> जानकारी</a>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Mobile Navigation Menu -->
+        <div id="mobileMenu" class="hidden md:hidden bg-slate-900 border-t border-slate-700 px-4 pt-2 pb-4 space-y-2 text-sm font-medium">
+            <a href="#hero" onclick="toggleMobileMenu()" class="block py-2 border-b border-slate-800 hover:text-amber-300"><i class="fa-solid fa-house w-6"></i> गृहपृष्ठ</a>
+            <a href="#calculator" onclick="toggleMobileMenu()" class="block py-2 border-b border-slate-800 hover:text-amber-300"><i class="fa-solid fa-calculator w-6"></i> तलब क्याल्कुलेटर</a>
+            <a href="#salary-table" onclick="toggleMobileMenu()" class="block py-2 border-b border-slate-800 hover:text-amber-300"><i class="fa-solid fa-table w-6"></i> तलब तालिका</a>
+            <a href="#allowances-info" onclick="toggleMobileMenu()" class="block py-2 border-b border-slate-800 hover:text-amber-300"><i class="fa-solid fa-coins w-6"></i> भत्ता विवरण</a>
+            <a href="#saved-section" onclick="toggleMobileMenu()" class="block py-2 border-b border-slate-800 hover:text-amber-300"><i class="fa-solid fa-bookmark w-6"></i> सुरक्षित गणनाहरू</a>
+            <a href="#creator-section" onclick="toggleMobileMenu()" class="block py-2 border-b border-slate-800 hover:text-amber-300"><i class="fa-solid fa-user-tie w-6"></i> निर्माता</a>
+            <a href="#info-section" onclick="toggleMobileMenu()" class="block py-2 hover:text-amber-300"><i class="fa-solid fa-circle-info w-6"></i> जानकारी</a>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section id="hero" class="relative bg-gradient-to-b from-slate-900 via-slate-800 to-nepal-blue text-white py-12 md:py-16 px-4 overflow-hidden border-b-4 border-nepal-gold">
+        <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:16px_16px]"></div>
+        
+        <div class="max-w-5xl mx-auto text-center relative z-10">
+            <span class="inline-block bg-nepal-red/80 backdrop-blur-sm text-amber-200 text-xs sm:text-sm px-3.5 py-1.5 rounded-full font-semibold mb-4 border border-nepal-gold/30">
+                🇳🇵 आर्थिक वर्ष २०८३/८४ को तलबमानमा आधारित
+            </span>
+            <h2 class="text-2xl sm:text-4xl md:text-5xl font-extrabold leading-tight mb-4 tracking-normal">
+                तपाईंको वास्तविक शिक्षक तलब सजिलै गणना गर्नुहोस्
+            </h2>
+            <p class="text-base sm:text-lg text-slate-300 max-w-3xl mx-auto mb-8 leading-relaxed font-light">
+                सामुदायिक तथा सरकारी विद्यालयका शिक्षकहरूको तह, श्रेणी, ग्रेड, भत्ता तथा कट्टीका आधारमा अनुमानित मासिक र वार्षिक तलब गणना गर्नुहोस्।
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center items-center gap-4">
+                <a href="#calculator" class="w-full sm:w-auto bg-nepal-red hover:bg-nepal-darkred text-white font-bold px-8 py-3.5 rounded-xl shadow-lg transition transform hover:-translate-y-0.5 flex items-center justify-center gap-2 text-base border border-amber-300/30">
+                    <i class="fa-solid fa-calculator text-amber-300"></i> तलब गणना सुरु गर्नुहोस्
+                </a>
+                <a href="#salary-table" class="w-full sm:w-auto bg-slate-800/80 hover:bg-slate-700 text-white font-medium px-6 py-3.5 rounded-xl border border-slate-600 transition flex items-center justify-center gap-2 text-base">
+                    <i class="fa-solid fa-list-check text-slate-300"></i> तलब तालिका हेर्नुहोस्
+                </a>
+            </div>
+        </div>
+
+        <!-- Himalayan Silhouette Banner -->
+        <div class="mt-8 h-12 w-full bg-slate-700/30 himalaya-shape"></div>
+    </section>
+
+    <!-- MAIN CONTENT CONTAINER -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12 flex-grow">
+
+        <!-- SALARY CALCULATOR SECTION -->
+        <section id="calculator" class="scroll-mt-24">
+            <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+                
+                <!-- Card Header -->
+                <div class="bg-slate-50 dark:bg-slate-800/80 border-b border-slate-200 dark:border-slate-700 p-5 sm:p-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                    <div>
+                        <h3 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                            <span class="p-2 bg-nepal-red text-white rounded-lg text-base"><i class="fa-solid fa-calculator"></i></span>
+                            शिक्षक तलब गणना (FY २०८३/८४)
+                        </h3>
+                        <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">
+                            तल दिइएका विवरणहरू छनोट गरी आफ्नो मासिक तथा वार्षिक आय निकाल्नुहोस्।
+                        </p>
+                    </div>
+                    <div class="flex items-center gap-2 self-end sm:self-auto">
+                        <button onclick="confirmReset()" class="text-xs bg-slate-200 dark:bg-slate-700 hover:bg-rose-100 hover:text-rose-700 dark:hover:bg-rose-900/40 dark:hover:text-rose-300 text-slate-700 dark:text-slate-300 px-3 py-2 rounded-lg transition font-semibold flex items-center gap-1.5">
+                            <i class="fa-solid fa-rotate-right"></i> रिसेट गर्नुहोस्
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Calculator Body Grid -->
+                <div class="p-5 sm:p-8 grid grid-cols-1 lg:grid-cols-12 gap-8">
+                    
+                    <!-- INPUT FORM COLUMN (LG: 7 cols) -->
+                    <div class="lg:col-span-7 space-y-6">
+                        
+                        <!-- 1. Level & Category Selection -->
+                        <div class="bg-slate-50 dark:bg-slate-900/50 p-4 sm:p-5 rounded-xl border border-slate-200 dark:border-slate-700 space-y-4">
+                            <h4 class="text-sm font-bold text-nepal-blue dark:text-sky-400 uppercase tracking-wider flex items-center gap-2">
+                                <i class="fa-solid fa-user-graduate"></i> १. शिक्षक तह र श्रेणी विवरण
+                            </h4>
+                            
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <!-- Level Input -->
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
+                                        शिक्षकको तह <span class="text-nepal-red">*</span>
+                                    </label>
+                                    <select id="teacherLevel" onchange="onLevelChange()" class="w-full bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-600 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-nepal-red focus:border-nepal-red transition dark:text-white">
+                                        <option value="secondary">माध्यमिक तह</option>
+                                        <option value="lower_secondary">निम्न माध्यमिक तह</option>
+                                        <option value="primary" selected>प्राथमिक तह</option>
+                                    </select>
+                                </div>
+
+                                <!-- Class/Category Input -->
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
+                                        श्रेणी <span class="text-nepal-red">*</span>
+                                    </label>
+                                    <select id="teacherClass" onchange="calculateSalary()" class="w-full bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-600 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-nepal-red focus:border-nepal-red transition dark:text-white">
+                                        <!-- Dynamically populated -->
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 2. Service & Grade System -->
+                        <div class="bg-slate-50 dark:bg-slate-900/50 p-4 sm:p-5 rounded-xl border border-slate-200 dark:border-slate-700 space-y-4">
+                            <h4 class="text-sm font-bold text-nepal-blue dark:text-sky-400 uppercase tracking-wider flex items-center gap-2">
+                                <i class="fa-solid fa-chart-line"></i> २. नियुक्ति मिति तथा ग्रेड विवरण
+                            </h4>
+
+                            <!-- Mode Selector for Grade -->
+                            <div class="flex items-center gap-4 text-xs font-medium pb-2 border-b border-slate-200 dark:border-slate-700">
+                                <label class="flex items-center gap-2 cursor-pointer">
+                                    <input type="radio" name="gradeMode" value="auto" checked onchange="toggleGradeMode('auto')" class="text-nepal-red focus:ring-nepal-red">
+                                    <span>सेवा अवधिबाट स्वतः ग्रेड गणना</span>
+                                </label>
+                                <label class="flex items-center gap-2 cursor-pointer">
+                                    <input type="radio" name="gradeMode" value="manual" onchange="toggleGradeMode('manual')" class="text-nepal-red focus:ring-nepal-red">
+                                    <span>ग्रेड आफैं छनोट गर्ने</span>
+                                </label>
+                            </div>
+
+                            <!-- Auto Grade via Appointment Date -->
+                            <div id="autoGradeContainer" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
+                                        नियुक्ति मिति (ई.सं.)
+                                    </label>
+                                    <input type="date" id="appointmentDate" onchange="calculateAutoGrade()" class="w-full bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-600 rounded-lg p-2 text-sm focus:ring-2 focus:ring-nepal-red dark:text-white">
+                                </div>
+                                <div class="flex flex-col justify-center bg-white dark:bg-slate-800 p-3 rounded-lg border border-slate-200 dark:border-slate-700">
+                                    <span class="text-xs text-slate-500 dark:text-slate-400">अनुमानित सेवा अवधि:</span>
+                                    <span id="serviceDurationText" class="text-sm font-bold text-slate-800 dark:text-amber-300">० वर्ष ० महिना</span>
+                                </div>
+                            </div>
+
+                            <!-- Grade Input Dropdown -->
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
+                                        हालको प्राप्त ग्रेड संख्या
+                                    </label>
+                                    <select id="gradeCountSelect" onchange="calculateSalary()" class="w-full bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-600 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-nepal-red transition dark:text-white font-semibold text-nepal-red">
+                                        <!-- Dynamically generated from max grades -->
+                                    </select>
+                                </div>
+                                <div class="flex flex-col justify-center bg-amber-50 dark:bg-amber-900/20 p-3 rounded-lg border border-amber-200 dark:border-amber-800">
+                                    <span class="text-xs text-amber-800 dark:text-amber-300">प्रति ग्रेड दर:</span>
+                                    <span id="gradeRateDisplay" class="text-sm font-bold text-amber-900 dark:text-amber-200">रु. ०</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 3. Allowances Section -->
+                        <div class="bg-slate-50 dark:bg-slate-900/50 p-4 sm:p-5 rounded-xl border border-slate-200 dark:border-slate-700 space-y-4">
+                            <h4 class="text-sm font-bold text-nepal-blue dark:text-sky-400 uppercase tracking-wider flex items-center gap-2">
+                                <i class="fa-solid fa-coins"></i> ३. भत्ता तथा सुविधा (Allowances)
+                            </h4>
+
+                            <div class="space-y-3">
+                                <!-- Mahangi Allowance -->
+                                <div class="flex items-center justify-between p-3 bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700">
+                                    <div class="flex items-center gap-2">
+                                        <input type="checkbox" id="mahangiToggle" checked onchange="calculateSalary()" class="w-4 h-4 text-nepal-red focus:ring-nepal-red rounded">
+                                        <label for="mahangiToggle" class="text-xs sm:text-sm font-semibold cursor-pointer">
+                                            महँगी भत्ता <span class="text-xs text-slate-500 font-normal">(रु. ५,०००/महिना)</span>
+                                        </label>
+                                    </div>
+                                    <span id="mahangiDisplay" class="text-xs sm:text-sm font-bold text-emerald-600 dark:text-emerald-400">रु. ५,०००</span>
+                                </div>
+
+                                <!-- Protsahan Allowance -->
+                                <div class="p-3 bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 space-y-2">
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center gap-2">
+                                            <input type="checkbox" id="protsahanToggle" checked onchange="calculateSalary()" class="w-4 h-4 text-nepal-red focus:ring-nepal-red rounded">
+                                            <label for="protsahanToggle" class="text-xs sm:text-sm font-semibold cursor-pointer">
+                                                प्रोत्साहन भत्ता
+                                            </label>
+                                        </div>
+                                        <div class="flex items-center gap-1">
+                                            <input type="number" id="protsahanPercent" value="10" min="0" max="100" oninput="calculateSalary()" class="w-16 p-1 border text-center text-xs rounded border-slate-300 dark:border-slate-600 dark:bg-slate-700 dark:text-white">
+                                            <span class="text-xs font-bold">%</span>
+                                        </div>
+                                    </div>
+                                    <p class="text-[11px] text-slate-500 dark:text-slate-400">
+                                        * सुरु आधारभूत तलबको आधारमा गणना गरिन्छ।
+                                    </p>
+                                </div>
+
+                                <!-- Festival Allowance / Dashain Allowance Option -->
+                                <div class="p-3 bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 space-y-2">
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center gap-2">
+                                            <i class="fa-solid fa-gift text-nepal-red"></i>
+                                            <span class="text-xs sm:text-sm font-semibold">चाडपर्व खर्च (वार्षिक १ महिनाको सुरु तलब)</span>
+                                        </div>
+                                        <span id="festivalAmountDisplay" class="text-xs sm:text-sm font-bold text-amber-600 dark:text-amber-400">रु. ०</span>
+                                    </div>
+                                    <div class="flex items-center gap-2 pt-1 border-t border-slate-100 dark:border-slate-700">
+                                        <input type="checkbox" id="includeFestivalMonthlyToggle" onchange="calculateSalary()" class="w-3.5 h-3.5 text-nepal-red focus:ring-nepal-red rounded">
+                                        <label for="includeFestivalMonthlyToggle" class="text-xs text-slate-600 dark:text-slate-300 cursor-pointer">
+                                            वार्षिक औसत मासिक तलबमा समावेश गर्ने (१/१२ हिस्सा)
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <!-- Expandable Other Allowances -->
+                                <details class="group bg-slate-100 dark:bg-slate-800/60 rounded-lg border border-slate-200 dark:border-slate-700">
+                                    <summary class="p-3 text-xs sm:text-sm font-semibold cursor-pointer flex justify-between items-center text-slate-700 dark:text-slate-200">
+                                        <span><i class="fa-solid fa-plus-circle text-sky-500 mr-1.5"></i> अन्य थप भत्ताहरू (दुर्गम/स्थानीय/विशेष)</span>
+                                        <i class="fa-solid fa-chevron-down group-open:rotate-180 transition-transform"></i>
+                                    </summary>
+                                    <div class="p-3 pt-0 grid grid-cols-1 sm:grid-cols-2 gap-3 border-t border-slate-200 dark:border-slate-700 mt-2">
+                                        <div>
+                                            <label class="block text-[11px] font-semibold text-slate-600 dark:text-slate-400 mb-1">दुर्गम भत्ता (रु.)</label>
+                                            <input type="number" id="durgamAllowance" value="0" min="0" oninput="calculateSalary()" class="w-full p-2 border rounded text-xs dark:bg-slate-700 dark:text-white dark:border-slate-600">
+                                        </div>
+                                        <div>
+                                            <label class="block text-[11px] font-semibold text-slate-600 dark:text-slate-400 mb-1">स्थानीय भत्ता (रु.)</label>
+                                            <input type="number" id="sthaniyaAllowance" value="0" min="0" oninput="calculateSalary()" class="w-full p-2 border rounded text-xs dark:bg-slate-700 dark:text-white dark:border-slate-600">
+                                        </div>
+                                        <div>
+                                            <label class="block text-[11px] font-semibold text-slate-600 dark:text-slate-400 mb-1">विशेष भत्ता (रु.)</label>
+                                            <input type="number" id="visheshAllowance" value="0" min="0" oninput="calculateSalary()" class="w-full p-2 border rounded text-xs dark:bg-slate-700 dark:text-white dark:border-slate-600">
+                                        </div>
+                                        <div>
+                                            <label class="block text-[11px] font-semibold text-slate-600 dark:text-slate-400 mb-1">अन्य भत्ता (रु.)</label>
+                                            <input type="number" id="otherAllowance" value="0" min="0" oninput="calculateSalary()" class="w-full p-2 border rounded text-xs dark:bg-slate-700 dark:text-white dark:border-slate-600">
+                                        </div>
+                                    </div>
+                                </details>
+                            </div>
+                        </div>
+
+                        <!-- 4. Deductions Section -->
+                        <div class="bg-slate-50 dark:bg-slate-900/50 p-4 sm:p-5 rounded-xl border border-slate-200 dark:border-slate-700 space-y-4">
+                            <h4 class="text-sm font-bold text-nepal-red dark:text-rose-400 uppercase tracking-wider flex items-center gap-2">
+                                <i class="fa-solid fa-scissors"></i> ४. कट्टी विवरण (Deductions)
+                            </h4>
+
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <!-- EPF / Provident Fund -->
+                                <div class="p-3 bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700">
+                                    <div class="flex justify-between items-center mb-1">
+                                        <label class="text-xs font-semibold">सञ्चय कोष (EPF)</label>
+                                        <div class="flex items-center gap-1">
+                                            <input type="number" id="epfPercent" value="10" min="0" max="50" oninput="calculateSalary()" class="w-14 p-1 border text-center text-xs rounded dark:bg-slate-700 dark:text-white">
+                                            <span class="text-xs font-bold">%</span>
+                                        </div>
+                                    </div>
+                                    <p class="text-[10px] text-slate-400">ग्रेडसहित आधारभूत तलबको १०%</p>
+                                </div>
+
+                                <!-- CIT -->
+                                <div class="p-3 bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700">
+                                    <label class="block text-xs font-semibold mb-1">नागरिक लगानी कोष (CIT रु.)</label>
+                                    <input type="number" id="citAmount" value="0" min="0" step="500" oninput="calculateSalary()" class="w-full p-2 border rounded text-xs dark:bg-slate-700 dark:text-white dark:border-slate-600">
+                                </div>
+
+                                <!-- Insurance -->
+                                <div class="p-3 bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700">
+                                    <label class="block text-xs font-semibold mb-1">सावधिक जीवन बीमा कट्टी (रु.)</label>
+                                    <input type="number" id="insuranceAmount" value="400" min="0" step="50" oninput="calculateSalary()" class="w-full p-2 border rounded text-xs dark:bg-slate-700 dark:text-white dark:border-slate-600">
+                                </div>
+
+                                <!-- Estimated Tax Toggle & Input -->
+                                <div class="p-3 bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 space-y-1">
+                                    <div class="flex justify-between items-center">
+                                        <label class="text-xs font-semibold">अनुमानित सामाजिक सुरक्षा/आयकर</label>
+                                        <input type="checkbox" id="taxToggle" checked onchange="calculateSalary()" class="w-4 h-4 text-nepal-red rounded">
+                                    </div>
+                                    <input type="number" id="taxAmount" value="1" min="0" placeholder="सामाजिक सुरक्षा कर %" oninput="calculateSalary()" class="w-full p-2 border rounded text-xs dark:bg-slate-700 dark:text-white dark:border-slate-600">
+                                    <p class="text-[10px] text-slate-400">* सुरुवाती सामाजिक सुरक्षा कर १%</p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <!-- RESULT DISPLAY COLUMN (LG: 5 cols) -->
+                    <div class="lg:col-span-5 flex flex-col space-y-6">
+                        
+                        <!-- Primary Salary Card -->
+                        <div class="bg-gradient-to-br from-slate-900 via-nepal-blue to-slate-900 text-white rounded-2xl p-6 shadow-2xl border-2 border-nepal-gold/40 flex-grow flex flex-col justify-between relative overflow-hidden">
+                            <div class="absolute -right-8 -bottom-8 opacity-10 text-8xl pointer-events-none">🇳🇵</div>
+
+                            <div>
+                                <div class="flex justify-between items-center pb-4 border-b border-white/10">
+                                    <span class="text-xs font-bold text-amber-300 uppercase tracking-wider">
+                                        <i class="fa-solid fa-receipt mr-1"></i> मुख्य तलब परिणाम
+                                    </span>
+                                    <span class="text-[11px] bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-2 py-0.5 rounded-full font-semibold">
+                                        FY २०८३/८४
+                                    </span>
+                                </div>
+
+                                <!-- Monthly Breakdown list -->
+                                <div class="mt-5 space-y-3 text-sm">
+                                    <div class="flex justify-between items-center text-slate-300">
+                                        <span>सुरु आधारभूत तलब:</span>
+                                        <span id="resBasicSalary" class="font-semibold text-white">रु. ०</span>
+                                    </div>
+                                    <div class="flex justify-between items-center text-slate-300">
+                                        <span>ग्रेड रकम (<span id="resGradeCount">०</span> ग्रेड):</span>
+                                        <span id="resGradeAmount" class="font-semibold text-amber-300">+ रु. ०</span>
+                                    </div>
+                                    <div class="flex justify-between items-center text-slate-200 pt-2 border-t border-white/10 font-medium">
+                                        <span>ग्रेडसहित तलब:</span>
+                                        <span id="resBasicWithGrade" class="font-bold text-white">रु. ०</span>
+                                    </div>
+                                    <div class="flex justify-between items-center text-slate-300">
+                                        <span>कुल भत्ताहरू:</span>
+                                        <span id="resTotalAllowances" class="font-semibold text-emerald-400">+ रु. ०</span>
+                                    </div>
+                                    <div class="flex justify-between items-center text-slate-200 font-bold text-base pt-2 border-t border-white/10">
+                                        <span>कुल सकल तलब (Gross):</span>
+                                        <span id="resGrossSalary" class="text-white">रु. ०</span>
+                                    </div>
+                                    <div class="flex justify-between items-center text-rose-300 text-xs sm:text-sm">
+                                        <span>कुल कट्टी (Deductions):</span>
+                                        <span id="resTotalDeductions" class="font-semibold">- रु. ०</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Highlights Net Payable Amount -->
+                            <div class="mt-8 bg-white/10 backdrop-blur-md rounded-xl p-5 border border-white/20 text-center space-y-1">
+                                <span class="text-xs text-amber-200 font-bold uppercase tracking-wider block">
+                                    💰 हातमा आउने अनुमानित मासिक तलब (Net Salary)
+                                </span>
+                                <div id="resNetSalary" class="text-3xl sm:text-4xl font-extrabold text-amber-300 tracking-tight animate-value">
+                                    रु. ०
+                                </div>
+                                <span class="text-[11px] text-slate-300 block">
+                                    (प्रति महिना बैङ्क खातामा जम्मा हुने शुद्ध रकम)
+                                </span>
+                            </div>
+
+                            <!-- Action Buttons inside result card -->
+                            <div class="mt-6 grid grid-cols-2 gap-3 pt-4 border-t border-white/10 text-xs">
+                                <button onclick="openBreakdownModal()" class="bg-amber-500/20 hover:bg-amber-500/30 text-amber-200 border border-amber-400/30 py-2.5 rounded-lg font-semibold transition flex items-center justify-center gap-1.5">
+                                    <i class="fa-solid fa-magnifying-glass font-normal"></i> विस्तृत विवरण
+                                </button>
+                                <button onclick="saveCurrentCalculation()" class="bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-200 border border-emerald-400/30 py-2.5 rounded-lg font-semibold transition flex items-center justify-center gap-1.5">
+                                    <i class="fa-solid fa-floppy-disk"></i> सुरक्षित गर्नुहोस्
+                                </button>
+                            </div>
+
+                        </div>
+
+                        <!-- Secondary Export Tools Card -->
+                        <div class="bg-slate-50 dark:bg-slate-900/60 rounded-xl p-4 border border-slate-200 dark:border-slate-700 flex flex-wrap gap-2 justify-center">
+                            <button onclick="printSalaryReport()" class="flex-1 min-w-[120px] bg-slate-800 hover:bg-slate-700 text-white py-2.5 px-3 rounded-lg text-xs font-semibold transition flex items-center justify-center gap-1.5">
+                                <i class="fa-solid fa-print"></i> प्रिन्ट गर्नुहोस्
+                            </button>
+                            <button onclick="downloadPDFReport()" class="flex-1 min-w-[120px] bg-nepal-red hover:bg-nepal-darkred text-white py-2.5 px-3 rounded-lg text-xs font-semibold transition flex items-center justify-center gap-1.5">
+                                <i class="fa-solid fa-file-pdf"></i> PDF / प्रिन्ट
+                            </button>
+                            <button onclick="shareCalculationLink()" class="flex-1 min-w-[120px] bg-nepal-blue hover:bg-blue-800 text-white py-2.5 px-3 rounded-lg text-xs font-semibold transition flex items-center justify-center gap-1.5">
+                                <i class="fa-solid fa-share-nodes"></i> सेयर गर्नुहोस्
+                            </button>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ANNUAL SALARY SUMMARY SECTION -->
+        <section id="annual-summary" class="bg-white dark:bg-slate-800 rounded-2xl shadow-lg border border-slate-200 dark:border-slate-700 p-6">
+            <h3 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
+                <i class="fa-solid fa-calendar-days text-nepal-red"></i>📊 वार्षिक तलब विवरण (Annual Summary)
+            </h3>
+            
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse text-xs sm:text-sm">
+                    <thead>
+                        <tr class="bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200 border-b border-slate-300 dark:border-slate-600">
+                            <th class="p-3 font-bold">आय विवरण (Income Heads)</th>
+                            <th class="p-3 font-bold text-right">मासिक रकम (Monthly)</th>
+                            <th class="p-3 font-bold text-right">वार्षिक रकम (Annual - 12 Months)</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-200 dark:divide-slate-700 text-slate-700 dark:text-slate-300">
+                        <tr>
+                            <td class="p-3 font-medium">आधारभूत तलब (सुरु)</td>
+                            <td id="annMonthlyBasic" class="p-3 text-right">रु. ०</td>
+                            <td id="annYearlyBasic" class="p-3 text-right">रु. ०</td>
+                        </tr>
+                        <tr>
+                            <td class="p-3 font-medium">ग्रेड रकम</td>
+                            <td id="annMonthlyGrade" class="p-3 text-right text-amber-600 dark:text-amber-400">रु. ०</td>
+                            <td id="annYearlyGrade" class="p-3 text-right text-amber-600 dark:text-amber-400">रु. ०</td>
+                        </tr>
+                        <tr>
+                            <td class="p-3 font-medium">महँगी भत्ता</td>
+                            <td id="annMonthlyMahangi" class="p-3 text-right">रु. ०</td>
+                            <td id="annYearlyMahangi" class="p-3 text-right">रु. ०</td>
+                        </tr>
+                        <tr>
+                            <td class="p-3 font-medium">प्रोत्साहन भत्ता</td>
+                            <td id="annMonthlyProtsahan" class="p-3 text-right">रु. ०</td>
+                            <td id="annYearlyProtsahan" class="p-3 text-right">रु. ०</td>
+                        </tr>
+                        <tr>
+                            <td class="p-3 font-medium">अन्य भत्ताहरू (दुर्गम/स्थानीय आदि)</td>
+                            <td id="annMonthlyOther" class="p-3 text-right">रु. ०</td>
+                            <td id="annYearlyOther" class="p-3 text-right">रु. ०</td>
+                        </tr>
+                        <tr class="bg-amber-50/50 dark:bg-amber-900/10">
+                            <td class="p-3 font-medium text-amber-800 dark:text-amber-300">चाडपर्व खर्च (Dashain Allowance)</td>
+                            <td class="p-3 text-right text-slate-400 italic">—</td>
+                            <td id="annYearlyFestival" class="p-3 text-right font-semibold text-amber-700 dark:text-amber-300">रु. ०</td>
+                        </tr>
+                        <tr class="bg-slate-50 dark:bg-slate-700/50 font-bold text-slate-900 dark:text-white">
+                            <td class="p-3">कुल सकल आम्दानी (Gross Income)</td>
+                            <td id="annMonthlyGross" class="p-3 text-right">रु. ०</td>
+                            <td id="annYearlyGross" class="p-3 text-right text-nepal-blue dark:text-sky-400">रु. ०</td>
+                        </tr>
+                        <tr class="text-rose-600 dark:text-rose-400">
+                            <td class="p-3 font-medium">कुल कट्टीहरू (Provident Fund, CIT, Tax, Insurance)</td>
+                            <td id="annMonthlyDeductions" class="p-3 text-right">रु. ०</td>
+                            <td id="annYearlyDeductions" class="p-3 text-right">रु. ०</td>
+                        </tr>
+                        <tr class="bg-emerald-50 dark:bg-emerald-950/30 font-extrabold text-emerald-800 dark:text-emerald-300 text-sm sm:text-base border-t-2 border-emerald-500">
+                            <td class="p-3">कुल शुद्ध बचत/आम्दानी (Net Annual In-Hand)</td>
+                            <td id="annMonthlyNet" class="p-3 text-right">रु. ०</td>
+                            <td id="annYearlyNet" class="p-3 text-right">रु. ०</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- COMPLETE SALARY SCALE TABLE SECTION -->
+        <section id="salary-table" class="bg-white dark:bg-slate-800 rounded-2xl shadow-lg border border-slate-200 dark:border-slate-700 p-6 scroll-mt-24">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
+                <div>
+                    <h3 class="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                        <i class="fa-solid fa-table-list text-nepal-blue"></i> 📋 नेपाल शिक्षक तलबमान तालिका २०८३/८४
+                    </h3>
+                    <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400">
+                        आर्थिक वर्ष २०८३/८४ का उपलब्ध तलबमानका आधारमा तयार गरिएको गणना तालिका।
+                    </p>
+                </div>
+
+                <!-- Table Search & Filters -->
+                <div class="flex flex-wrap gap-2 w-full md:w-auto">
+                    <input type="text" id="tableSearchInput" oninput="filterSalaryTable()" placeholder="खोज्नुहोस् (उदा: माध्यमिक, प्रथम)..." class="p-2 border rounded-lg text-xs dark:bg-slate-700 dark:text-white dark:border-slate-600 flex-grow md:w-48">
+                    <select id="tableLevelFilter" onchange="filterSalaryTable()" class="p-2 border rounded-lg text-xs dark:bg-slate-700 dark:text-white dark:border-slate-600">
+                        <option value="all">सबै तह</option>
+                        <option value="secondary">माध्यमिक तह</option>
+                        <option value="lower_secondary">निम्न माध्यमिक</option>
+                        <option value="primary">प्राथमिक तह</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Scrollable Table -->
+            <div class="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-700">
+                <table class="w-full text-left text-xs sm:text-sm">
+                    <thead class="bg-nepal-blue text-white font-bold">
+                        <tr>
+                            <th class="p-3">शिक्षक तह</th>
+                            <th class="p-3">श्रेणी</th>
+                            <th class="p-3 text-right">सुरु तलब (Basic)</th>
+                            <th class="p-3 text-center">अधिकतम ग्रेड संख्या</th>
+                            <th class="p-3 text-right">प्रति ग्रेड दर</th>
+                            <th class="p-3 text-right">ग्रेडसहित अधिकतम तलब</th>
+                        </tr>
+                    </thead>
+                    <tbody id="salaryTableBody" class="divide-y divide-slate-200 dark:divide-slate-700">
+                        <!-- Populated dynamically via JS -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ALLOWANCES INFORMATION SECTION -->
+        <section id="allowances-info" class="bg-white dark:bg-slate-800 rounded-2xl shadow-lg border border-slate-200 dark:border-slate-700 p-6 scroll-mt-24 space-y-6">
+            <div>
+                <h3 class="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                    <i class="fa-solid fa-coins text-nepal-gold"></i> 💰 शिक्षक भत्ता सम्बन्धी जानकारी
+                </h3>
+                <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">
+                    प्रमुख भत्ता तथा सुविधाबारे संक्षिप्त जानकारी।
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                
+                <!-- Mahangi Card -->
+                <div class="bg-slate-50 dark:bg-slate-900/60 p-4 rounded-xl border border-slate-200 dark:border-slate-700 space-y-2">
+                    <div class="text-nepal-red text-xl"><i class="fa-solid fa-bread-slice"></i></div>
+                    <h4 class="font-bold text-sm text-slate-900 dark:text-white">महँगी भत्ता</h4>
+                    <p class="text-xs text-emerald-600 dark:text-emerald-400 font-bold">रु. ५,०००/महिना</p>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+                        सबै स्थायी र स्वीकृत दरबन्दीका शिक्षकहरूका लागि एकसमान मासिक ५ हजार रुपैयाँ महँगी भत्ता उपलब्ध गराइन्छ।
+                    </p>
+                    <span class="inline-block bg-emerald-100 text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-300 text-[10px] px-2 py-0.5 rounded font-medium">स्थायी रूपमा लागू</span>
+                </div>
+
+                <!-- Protsahan Card -->
+                <div class="bg-slate-50 dark:bg-slate-900/60 p-4 rounded-xl border border-slate-200 dark:border-slate-700 space-y-2">
+                    <div class="text-amber-500 text-xl"><i class="fa-solid fa-award"></i></div>
+                    <h4 class="font-bold text-sm text-slate-900 dark:text-white">प्रोत्साहन भत्ता</h4>
+                    <p class="text-xs text-amber-600 dark:text-amber-400 font-bold">१०% (सुरु आधारभूत तलब)</p>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+                        विशेष कार्य सम्पादन वा तोकिएको मापदण्ड पूरा गर्ने शिक्षकहरूका लागि सुरु स्केलको १०% सम्म प्रोत्साहन भत्ता उपलब्ध हुन्छ।
+                    </p>
+                    <span class="inline-block bg-amber-100 text-amber-800 dark:bg-amber-900/40 dark:text-amber-300 text-[10px] px-2 py-0.5 rounded font-medium">शर्त अनुसार लागू</span>
+                </div>
+
+                <!-- Dashain Card -->
+                <div class="bg-slate-50 dark:bg-slate-900/60 p-4 rounded-xl border border-slate-200 dark:border-slate-700 space-y-2">
+                    <div class="text-sky-500 text-xl"><i class="fa-solid fa-gifts"></i></div>
+                    <h4 class="font-bold text-sm text-slate-900 dark:text-white">चाडपर्व खर्च</h4>
+                    <p class="text-xs text-sky-600 dark:text-sky-400 font-bold">१ महिनाको सुरु तलब</p>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+                        वर्षको एक पटक बडादसैँ वा आ-आफ्नो मुख्य चाडपर्वका लागि सुरु तलब बराबरको चाडपर्व खर्च भुक्तानी गरिन्छ।
+                    </p>
+                    <span class="inline-block bg-sky-100 text-sky-800 dark:bg-sky-900/40 dark:text-sky-300 text-[10px] px-2 py-0.5 rounded font-medium">वार्षिक १ पटक</span>
+                </div>
+
+                <!-- Other Allowance Card -->
+                <div class="bg-slate-50 dark:bg-slate-900/60 p-4 rounded-xl border border-slate-200 dark:border-slate-700 space-y-2">
+                    <div class="text-purple-500 text-xl"><i class="fa-solid fa-mountain"></i></div>
+                    <h4 class="font-bold text-sm text-slate-900 dark:text-white">दुर्गम / स्थानीय भत्ता</h4>
+                    <p class="text-xs text-purple-600 dark:text-purple-400 font-bold">भौगोलिक क्षेत्र अनुसार</p>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+                        हिमाली तथा अति दुर्गम हिमाली क्षेत्र 'क', 'ख', 'ग' मा कार्यरत शिक्षकहरूका लागि तोकिएको दुर्गम वा स्थानीय भत्ता प्राप्त हुन्छ।
+                    </p>
+                    <span class="inline-block bg-purple-100 text-purple-800 dark:bg-purple-900/40 dark:text-purple-300 text-[10px] px-2 py-0.5 rounded font-medium">स्थान/परिस्थिति अनुसार</span>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SAVED CALCULATIONS HISTORY SECTION -->
+        <section id="saved-section" class="bg-white dark:bg-slate-800 rounded-2xl shadow-lg border border-slate-200 dark:border-slate-700 p-6 scroll-mt-24">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                    <i class="fa-solid fa-bookmark text-emerald-500"></i> 💾 सुरक्षित गरिएका हालैका गणनाहरू
+                </h3>
+                <button onclick="clearSavedCalculations()" class="text-xs text-rose-500 hover:text-rose-700 font-medium">
+                    सबै हटाउनुहोस्
+                </button>
+            </div>
+
+            <div id="savedCalculationsList" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                <!-- Dynamically populated or empty message -->
+                <p class="text-xs text-slate-400 col-span-full py-4 text-center italic">
+                    हालसम्म कुनै पनि गणना सुरक्षित गरिएको छैन। "सुरक्षित गर्नुहोस्" बटन थिची बचत गर्नुहोस्।
+                </p>
+            </div>
+        </section>
+
+        <!-- CREATOR / ABOUT SECTION -->
+        <section id="creator-section" class="bg-white dark:bg-slate-800 rounded-2xl shadow-lg border border-slate-200 dark:border-slate-700 p-6 scroll-mt-24 overflow-hidden relative">
+            <div class="absolute -top-16 -right-16 w-40 h-40 rounded-full bg-nepal-red/5 dark:bg-nepal-red/10"></div>
+            <div class="relative grid grid-cols-1 md:grid-cols-[180px_1fr] gap-6 items-center">
+                <div class="flex justify-center">
+                    <div class="w-36 h-36 rounded-full p-1 bg-gradient-to-br from-nepal-red via-nepal-gold to-nepal-blue shadow-lg">
+                        <img src="Vina.jpg" alt="छविलाल के.सी." class="w-full h-full rounded-full object-cover bg-slate-100 dark:bg-slate-700"" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+                        <div style="display:none" class="w-full h-full rounded-full items-center justify-center text-center bg-slate-100 dark:bg-slate-700 text-slate-500 dark:text-slate-300 font-bold text-sm px-3">छविलाल के.सी.</div>
+                    </div>
+
+                <div>
+                    <p class="text-xs font-bold tracking-widest uppercase text-nepal-red dark:text-rose-400 mb-1">निर्माताको बारेमा · About the Creator</p>
+                    <h3 class="text-2xl font-extrabold text-slate-900 dark:text-white">छविलाल के.सी.</h3>
+                    <p class="text-sm font-semibold text-nepal-blue dark:text-sky-400 mt-1">Website Designer & Creator</p>
+                    <p class="text-sm text-slate-600 dark:text-slate-300 leading-7 mt-3 max-w-3xl">
+                        शिक्षक तथा प्रविधिप्रेमी छविलाल के.सी. द्वारा विकसित यो वेबसाइट नेपालका शिक्षकहरूलाई आफ्नो तलब, ग्रेड, भत्ता तथा कट्टीको अनुमानित विवरण सरल र सहज रूपमा गणना गर्न सहयोग गर्ने उद्देश्यले निर्माण गरिएको हो।
+                    </p>
+                    
+                    <div class="mt-4">
+                        <a id="creatorFacebookLink" href="#" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-[#1877F2] hover:bg-[#0f66d0] text-white px-4 py-2.5 rounded-lg text-xs font-bold transition shadow-sm">
+                            <i class="fa-brands fa-facebook-f"></i> Facebook मा जोडिनुहोस्
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- IMPORTANT DISCLAIMER BOX -->
+        <section id="info-section" class="bg-amber-50 dark:bg-amber-950/30 border-l-4 border-amber-500 p-5 rounded-r-xl space-y-2">
+            <h4 class="text-sm font-bold text-amber-900 dark:text-amber-300 flex items-center gap-2">
+                <i class="fa-solid fa-circle-exclamation"></i> महत्त्वपूर्ण सूचना तथा अस्वीकरण (Disclaimer):
+            </h4>
+            <p class="text-xs text-amber-800 dark:text-amber-200/90 leading-relaxed">
+                यस क्याल्कुलेटरमा प्रयोग गरिएका तलब तथा भत्ता विवरण आर्थिक वर्ष २०८३/८४ का उपलब्ध प्रकाशित तलबमान/निर्णयहरूमा आधारित छन्। वास्तविक तलबमा नियुक्ति मिति, श्रेणी, प्राप्त ग्रेड, दुर्गम भत्ता, आय कर छुट तथा व्यक्तिगत कट्टीका कारण केही फरक पर्न सक्छ। अन्तिम तथा आधिकारिक भुक्तानीका लागि सम्बन्धित कोष तथा लेखा नियन्त्रक कार्यालय (कोलेनिका) वा विद्यालयको आधिकारिक कागजातलाई मान्यता दिनुहोस्।
+            </p>
+            <p class="text-[11px] text-amber-700 dark:text-amber-400 font-semibold">
+                अन्तिम अद्यावधिक: आर्थिक वर्ष २०८३/८४
+            </p>
+        </section>
+
+    </main>
+
+    <!-- FOOTER SECTION -->
+    <footer class="bg-slate-900 text-slate-400 text-xs py-8 border-t border-slate-800 mt-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+            
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4 pb-6 border-b border-slate-800 text-center md:text-left">
+                <div>
+                    <div class="flex items-center justify-center md:justify-start gap-2 text-white font-bold text-base mb-1">
+                        <span>🇳🇵</span> नेपाल सरकारी शिक्षक तलब क्याल्कुलेटर
+                    </div>
+                    <p class="text-slate-400 text-[11px]">
+                        आर्थिक वर्ष २०८३/८४ का लागि तयार पारिएको नि:शुल्क अनलाइन तलब गणना पोर्टल
+                    </p>
+                    <p class="text-slate-500 text-[10px] mt-1">तलब तथ्याङ्क अद्यावधिक गर्न Central Salary Configuration हेर्नुहोस्।</p>
+                </div>
+
+                <!-- Maker Attribution -->
+                <div class="bg-slate-800/80 border border-slate-700/60 p-3 rounded-xl text-center md:text-right">
+                    <p class="text-slate-300 font-semibold text-xs">
+                        निर्माता: <span class="text-amber-300 font-bold">छविलाल के.सी.</span>
+                    </p>
+                    <p class="text-[10px] text-slate-400">
+                        Website Maker: Chhabilal K.C.
+                    </p>
+                </div>
+            </div>
+
+            <div class="flex flex-col sm:flex-row justify-between items-center gap-2 text-[11px] text-slate-500">
+                <p>© २०८३ | सर्वाधिकार सुरक्षित। यो वेबसाइट सरकारी आधिकारिक निकाय होइन।</p>
+                <div class="flex space-x-4">
+                    <a href="#hero" class="hover:text-slate-300">माथि जानुहोस् <i class="fa-solid fa-arrow-up"></i></a>
+                </div>
+            </div>
+
+        </div>
+    <a href="https://www.facebook.com/pushpa.khatri.581" target="_blank" rel="noopener noreferrer" aria-label="Facebook मा Pushpa Khatri को प्रोफाइल खोल्नुहोस्" class="facebook-direct-btn">
+  <span aria-hidden="true">f</span> Facebook प्रोफाइल हेर्नुहोस्
+</a>
+</footer>
+
+    <!-- BREAKDOWN MODAL DIALOG -->
+    <div id="breakdownModal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-slate-800 rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-slate-200 dark:border-slate-700 space-y-4 max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center border-b pb-3 dark:border-slate-700">
+                <h3 class="font-bold text-lg text-slate-900 dark:text-white flex items-center gap-2">
+                    <i class="fa-solid fa-calculator text-nepal-red"></i> 🔍 विस्तृत तलब गणना प्रक्रिया
+                </h3>
+                <button onclick="closeBreakdownModal()" class="text-slate-400 hover:text-slate-600 text-lg">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <div id="breakdownContent" class="space-y-3 text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed font-mono">
+                <!-- Dynamically generated breakdown text -->
+            </div>
+
+            <div class="pt-3 border-t dark:border-slate-700 flex justify-end">
+                <button onclick="closeBreakdownModal()" class="bg-nepal-blue text-white font-semibold px-4 py-2 rounded-lg text-xs">
+                    बन्द गर्नुहोस्
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- RESET CONFIRMATION MODAL -->
+    <div id="confirmResetModal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-slate-800 rounded-2xl max-w-sm w-full p-6 shadow-2xl border border-slate-200 dark:border-slate-700 space-y-4 text-center">
+            <div class="w-12 h-12 bg-rose-100 text-rose-600 rounded-full flex items-center justify-center mx-auto text-xl">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+            </div>
+            <h3 class="font-bold text-base text-slate-900 dark:text-white">के तपाईं रिसेट गर्न चाहनुहुन्छ?</h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400">
+                यसले तपाईंले रोज्नुभएका सम्पूर्ण विवरण, थप भत्ता र कट्टीहरूलाई सुरुवाती अवस्थामा फर्काउनेछ।
+            </p>
+            <div class="flex gap-3 pt-2">
+                <button onclick="closeResetModal()" class="flex-1 bg-slate-200 dark:bg-slate-700 py-2 rounded-lg text-xs font-semibold text-slate-700 dark:text-slate-300">
+                    रद्द गर्नुहोस्
+                </button>
+                <button onclick="executeReset()" class="flex-1 bg-nepal-red text-white py-2 rounded-lg text-xs font-semibold">
+                    हो, रिसेट गर्नुहोस्
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function testSalaryCalculation() {
+
+    console.log("=================================");
+    console.log("TEACHER SALARY CALCULATOR TEST");
+    console.log("=================================");
+
+    const tests = [];
+
+    for (const levelKey in SALARY_DATABASE) {
+
+        for (const classKey in SALARY_DATABASE[levelKey].classes) {
+
+            const cls =
+                SALARY_DATABASE[levelKey].classes[classKey];
+
+            const gradeRate =
+                (cls.maxSalary - cls.basic) / cls.grades;
+
+            const gradeAmount =
+                2 * gradeRate;
+
+            const basicWithGrade =
+                cls.basic + gradeAmount;
+
+            const testResult = {
+                level: SALARY_DATABASE[levelKey].title,
+                category: cls.title,
+                basic: cls.basic,
+                gradeRate: gradeRate,
+                grades: 2,
+                gradeAmount: gradeAmount,
+                basicWithGrade: basicWithGrade
+            };
+
+            tests.push(testResult);
+
+            console.log(testResult);
+        }
+    }
+
+    return tests;
+}
+        const CURRENT_FISCAL_YEAR = "२०८३/८४";
+
+        // Creator profile configuration — replace with the real Facebook profile URL.
+        const CREATOR_FACEBOOK_URL = "";
+
+        // Editable Central Salary Configuration Object (FY 2083/84)
+        const SALARY_DATABASE = {
+            secondary: {
+                title: "माध्यमिक तह",
+                classes: {
+                    first: { title: "प्रथम श्रेणी", basic: 62466, grades: 6, gradeRate: 2082, maxSalary: 74958 },
+                    second: { title: "द्वितीय श्रेणी", basic: 53611, grades: 8, gradeRate: 1787, maxSalary: 67907 },
+                    third: { title: "तृतीय श्रेणी", basic: 48058, grades: 8, gradeRate: 1602, maxSalary: 60874 }
+                }
+            },
+            lower_secondary: {
+                title: "निम्न माध्यमिक तह",
+                classes: {
+                    first: { title: "प्रथम श्रेणी", basic: 50448, grades: 8, gradeRate: 1682, maxSalary: 63904 },
+                    second: { title: "द्वितीय श्रेणी", basic: 48058, grades: 8, gradeRate: 1602, maxSalary: 60874 },
+                    third: { title: "तृतीय श्रेणी", basic: 38203, grades: 8, gradeRate: 1272.625, maxSalary: 48384, gradeWarning: "प्रकाशित सुरु/अधिकतम रकमबाट प्रति-ग्रेड दर पूर्णांकमा नआउने भएकाले आधिकारिक ग्रेड दर पुनः प्रमाणीकरण आवश्यक छ।" }
+                }
+            },
+            primary: {
+                title: "प्राथमिक तह",
+                classes: {
+                    first: { title: "प्रथम श्रेणी", basic: 48058, grades: 8, gradeRate: 1602, maxSalary: 60874 },
+                    second: { title: "द्वितीय श्रेणी", basic: 38203, grades: 8, gradeRate: 1273, maxSalary: 48387 },
+                    third: { title: "तृतीय श्रेणी", basic: 36192, grades: 6, gradeRate: 1206, maxSalary: 43428 }
+                }
+            }
+        };
+
+        // Application State
+        let currentNumeralSystem = localStorage.getItem('teacherSalary_numeral') || 'nepali'; // 'nepali' or 'english'
+        let currentCalcState = {};
+
+        const devanagariDigits = ['०', '१', '२', '३', '४', '५', '६', '७', '८', '९'];
+
+        function toNepaliDigits(numStr) {
+            return numStr.toString().replace(/[0-9]/g, function(w) {
+                return devanagariDigits[parseInt(w)];
+            });
+        }
+
+        function formatCurrency(amount) {
+            if (isNaN(amount) || amount === null) amount = 0;
+            const rounded = Math.round(amount);
+            
+            // Format number in Indian/Nepali grouping (1,00,000)
+            const numStr = rounded.toString();
+            let lastThree = numStr.substring(numStr.length - 3);
+            let otherNumbers = numStr.substring(0, numStr.length - 3);
+            if (otherNumbers !== '') {
+                lastThree = ',' + lastThree;
+            }
+            const formattedEng = otherNumbers.replace(/\B(?=(\d{2})+(?!\d))/g, ",") + lastThree;
+
+            if (currentNumeralSystem === 'nepali') {
+                return 'रु. ' + toNepaliDigits(formattedEng);
+            } else {
+                return 'Rs. ' + formattedEng;
+            }
+        }
+
+        function formatNumberOnly(num) {
+            const str = Math.round(num).toString();
+            return currentNumeralSystem === 'nepali' ? toNepaliDigits(str) : str;
+        }
+
+        function toggleNumeralSystem() {
+            currentNumeralSystem = currentNumeralSystem === 'nepali' ? 'english' : 'nepali';
+            localStorage.setItem('teacherSalary_numeral', currentNumeralSystem);
+            document.getElementById('numeralLabel').innerText = currentNumeralSystem === 'nepali' ? 'नेपाली अंक' : 'English Digits';
+            calculateSalary();
+            renderSalaryTable();
+            renderSavedCalculations();
+        }
+
+        function toggleDarkMode() {
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('teacherSalary_theme', 'light');
+                document.getElementById('themeIcon').className = 'fa-solid fa-moon';
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('teacherSalary_theme', 'dark');
+                document.getElementById('themeIcon').className = 'fa-solid fa-sun';
+            }
+        }
+
+        function initTheme() {
+            const savedTheme = localStorage.getItem('teacherSalary_theme');
+            if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+                document.getElementById('themeIcon').className = 'fa-solid fa-sun';
+            }
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('hidden');
+        }
+
+        function onLevelChange() {
+            const levelKey = document.getElementById('teacherLevel').value;
+            const classSelect = document.getElementById('teacherClass');
+            classSelect.innerHTML = '';
+
+            const levelObj = SALARY_DATABASE[levelKey];
+            if (levelObj && levelObj.classes) {
+                for (const classKey in levelObj.classes) {
+                    const option = document.createElement('option');
+                    option.value = classKey;
+                    option.innerText = levelObj.classes[classKey].title;
+                    classSelect.appendChild(option);
+                }
+            }
+            updateGradeOptions();
+            calculateSalary();
+        }
+
+        function updateGradeOptions() {
+            const levelKey = document.getElementById('teacherLevel').value;
+            const classKey = document.getElementById('teacherClass').value;
+            const gradeSelect = document.getElementById('gradeCountSelect');
+            const currentSelected = parseInt(gradeSelect.value) || 0;
+
+            const classObj = SALARY_DATABASE[levelKey]?.classes[classKey];
+            if (!classObj) return;
+
+            const maxGrades = classObj.grades;
+            gradeSelect.innerHTML = '';
+
+            for (let i = 0; i <= maxGrades; i++) {
+                const opt = document.createElement('option');
+                opt.value = i;
+                opt.innerText = formatNumberOnly(i) + (i === maxGrades ? ' (अधिकतम)' : ' ग्रेड');
+                gradeSelect.appendChild(opt);
+            }
+
+            if (currentSelected <= maxGrades) {
+                gradeSelect.value = currentSelected;
+            } else {
+                gradeSelect.value = maxGrades;
+            }
+
+            // Calculate per grade rate
+            const gradeRate = Number.isFinite(classObj.gradeRate) ? classObj.gradeRate : ((classObj.maxSalary - classObj.basic) / classObj.grades);
+            document.getElementById('gradeRateDisplay').innerText = formatCurrency(gradeRate);
+        }
+
+        function toggleGradeMode(mode) {
+            const autoContainer = document.getElementById('autoGradeContainer');
+            if (mode === 'auto') {
+                autoContainer.classList.remove('opacity-50', 'pointer-events-none');
+                calculateAutoGrade();
+            } else {
+                autoContainer.classList.add('opacity-50', 'pointer-events-none');
+            }
+        }
+
+        function calculateAutoGrade() {
+            const dateVal = document.getElementById('appointmentDate').value;
+            if (!dateVal) {
+                document.getElementById('serviceDurationText').innerText = formatNumberOnly(0) + ' वर्ष ' + formatNumberOnly(0) + ' महिना';
+                return;
+            }
+
+            const appt = new Date(dateVal);
+            const today = new Date();
+            let years = today.getFullYear() - appt.getFullYear();
+            let months = today.getMonth() - appt.getMonth();
+
+            if (months < 0) {
+                years--;
+                months += 12;
+            }
+
+            if (years < 0) years = 0;
+
+            document.getElementById('serviceDurationText').innerText = formatNumberOnly(years) + ' वर्ष ' + formatNumberOnly(months) + ' महिना';
+
+            // Auto set grade based on completed years up to max grade
+            const levelKey = document.getElementById('teacherLevel').value;
+            const classKey = document.getElementById('teacherClass').value;
+            const classObj = SALARY_DATABASE[levelKey]?.classes[classKey];
+
+            if (classObj) {
+                const autoGrade = Math.min(years, classObj.grades);
+                document.getElementById('gradeCountSelect').value = autoGrade;
+                calculateSalary();
+            }
+        }
+
+        function calculateSalary() {
+            const levelKey = document.getElementById('teacherLevel').value;
+            const classKey = document.getElementById('teacherClass').value;
+            const classObj = SALARY_DATABASE[levelKey]?.classes[classKey];
+
+            if (!classObj) return;
+
+            // Grade rate calculation
+            const basicSalary = classObj.basic;
+            const maxGrades = classObj.grades;
+            const gradeRate = Number.isFinite(classObj.gradeRate) ? classObj.gradeRate : ((classObj.maxSalary - basicSalary) / maxGrades);
+
+            updateGradeOptions();
+
+            const gradeCount = parseInt(document.getElementById('gradeCountSelect').value) || 0;
+            const gradeAmount = gradeCount * gradeRate;
+            const basicWithGrade = basicSalary + gradeAmount;
+
+            // Allowances
+            const mahangiActive = document.getElementById('mahangiToggle').checked;
+            const mahangiAmount = mahangiActive ? 5000 : 0;
+            document.getElementById('mahangiDisplay').innerText = formatCurrency(mahangiAmount);
+
+            const protsahanActive = document.getElementById('protsahanToggle').checked;
+            const protsahanPct = parseFloat(document.getElementById('protsahanPercent').value) || 0;
+            const protsahanAmount = protsahanActive ? (basicSalary * (protsahanPct / 100)) : 0;
+
+            // Other allowances
+            const durgam = parseFloat(document.getElementById('durgamAllowance').value) || 0;
+            const sthaniya = parseFloat(document.getElementById('sthaniyaAllowance').value) || 0;
+            const vishesh = parseFloat(document.getElementById('visheshAllowance').value) || 0;
+            const otherAllow = parseFloat(document.getElementById('otherAllowance').value) || 0;
+            const totalOtherAllow = durgam + sthaniya + vishesh + otherAllow;
+
+            const totalAllowances = mahangiAmount + protsahanAmount + totalOtherAllow;
+
+            // Dashain / Festival Allowance
+            const festivalAllowanceAnnual = basicSalary;
+            document.getElementById('festivalAmountDisplay').innerText = formatCurrency(festivalAllowanceAnnual);
+            const includeFestivalMonthly = document.getElementById('includeFestivalMonthlyToggle').checked;
+            const monthlyFestivalShare = includeFestivalMonthly ? (festivalAllowanceAnnual / 12) : 0;
+
+            // Gross Monthly Salary
+            const grossMonthlySalary = basicWithGrade + totalAllowances + monthlyFestivalShare;
+
+            // Deductions
+            const epfPct = parseFloat(document.getElementById('epfPercent').value) || 0;
+            const epfDeduction = basicWithGrade * (epfPct / 100);
+
+            const citDeduction = parseFloat(document.getElementById('citAmount').value) || 0;
+            const insuranceDeduction = parseFloat(document.getElementById('insuranceAmount').value) || 0;
+
+            const taxActive = document.getElementById('taxToggle').checked;
+            const taxPct = parseFloat(document.getElementById('taxAmount').value) || 0;
+            const taxDeduction = taxActive ? (grossMonthlySalary * (taxPct / 100)) : 0;
+
+            const totalDeductions = epfDeduction + citDeduction + insuranceDeduction + taxDeduction;
+
+            // Net Monthly Salary
+            const netMonthlySalary = Math.max(0, grossMonthlySalary - totalDeductions);
+
+            // Save state for breakdown / pdf / export
+            currentCalcState = {
+                levelTitle: SALARY_DATABASE[levelKey].title,
+                classTitle: classObj.title,
+                basicSalary,
+                gradeCount,
+                gradeRate,
+                gradeAmount,
+                basicWithGrade,
+                mahangiAmount,
+                protsahanAmount,
+                protsahanPct,
+                totalOtherAllow,
+                totalAllowances,
+                monthlyFestivalShare,
+                grossMonthlySalary,
+                epfDeduction,
+                citDeduction,
+                insuranceDeduction,
+                taxDeduction,
+                totalDeductions,
+                netMonthlySalary,
+                festivalAllowanceAnnual
+            };
+
+            // Update Result Dashboard UI
+            document.getElementById('resBasicSalary').innerText = formatCurrency(basicSalary);
+            document.getElementById('resGradeCount').innerText = formatNumberOnly(gradeCount);
+            document.getElementById('resGradeAmount').innerText = '+ ' + formatCurrency(gradeAmount);
+            document.getElementById('resBasicWithGrade').innerText = formatCurrency(basicWithGrade);
+            document.getElementById('resTotalAllowances').innerText = '+ ' + formatCurrency(totalAllowances + monthlyFestivalShare);
+            document.getElementById('resGrossSalary').innerText = formatCurrency(grossMonthlySalary);
+            document.getElementById('resTotalDeductions').innerText = '- ' + formatCurrency(totalDeductions);
+            document.getElementById('resNetSalary').innerText = formatCurrency(netMonthlySalary);
+
+            // Update Annual Summary Table
+            updateAnnualSummaryTable(currentCalcState);
+        }
+
+        function updateAnnualSummaryTable(state) {
+            document.getElementById('annMonthlyBasic').innerText = formatCurrency(state.basicSalary);
+            document.getElementById('annYearlyBasic').innerText = formatCurrency(state.basicSalary * 12);
+
+            document.getElementById('annMonthlyGrade').innerText = formatCurrency(state.gradeAmount);
+            document.getElementById('annYearlyGrade').innerText = formatCurrency(state.gradeAmount * 12);
+
+            document.getElementById('annMonthlyMahangi').innerText = formatCurrency(state.mahangiAmount);
+            document.getElementById('annYearlyMahangi').innerText = formatCurrency(state.mahangiAmount * 12);
+
+            document.getElementById('annMonthlyProtsahan').innerText = formatCurrency(state.protsahanAmount);
+            document.getElementById('annYearlyProtsahan').innerText = formatCurrency(state.protsahanAmount * 12);
+
+            document.getElementById('annMonthlyOther').innerText = formatCurrency(state.totalOtherAllow);
+            document.getElementById('annYearlyOther').innerText = formatCurrency(state.totalOtherAllow * 12);
+
+            document.getElementById('annYearlyFestival').innerText = formatCurrency(state.festivalAllowanceAnnual);
+
+            const annualGross = (state.grossMonthlySalary * 12) + (document.getElementById('includeFestivalMonthlyToggle').checked ? 0 : state.festivalAllowanceAnnual);
+            document.getElementById('annMonthlyGross').innerText = formatCurrency(state.grossMonthlySalary);
+            document.getElementById('annYearlyGross').innerText = formatCurrency(annualGross);
+
+            document.getElementById('annMonthlyDeductions').innerText = formatCurrency(state.totalDeductions);
+            document.getElementById('annYearlyDeductions').innerText = formatCurrency(state.totalDeductions * 12);
+
+            const annualNet = annualGross - (state.totalDeductions * 12);
+            document.getElementById('annMonthlyNet').innerText = formatCurrency(state.netMonthlySalary);
+            document.getElementById('annYearlyNet').innerText = formatCurrency(annualNet);
+        }
+
+        function openBreakdownModal() {
+            const s = currentCalcState;
+            if (!s.levelTitle) return;
+
+            const html = `
+                <div class="p-3 bg-slate-100 dark:bg-slate-700 rounded-lg space-y-1">
+                    <p class="font-bold text-nepal-blue dark:text-sky-300">${s.levelTitle} — ${s.classTitle}</p>
+                    <p>सुरु आधारभूत तलब: <span class="font-bold">${formatCurrency(s.basicSalary)}</span></p>
+                </div>
+                <div class="space-y-1">
+                    <p>• प्रति ग्रेड दर = कन्फिगर गरिएको ग्रेड दर</p>
+                    <p class="text-slate-500 pl-4">= ${formatCurrency(s.gradeRate)} प्रति ग्रेड</p>
+                    <p>• प्राप्त ग्रेड रकम = ${formatNumberOnly(s.gradeCount)} × ${formatCurrency(s.gradeRate)} = <span class="font-bold text-amber-600">${formatCurrency(s.gradeAmount)}</span></p>
+                    <p class="font-semibold text-slate-800 dark:text-white pt-1">=> ग्रेडसहितको आधारभूत तलब = ${formatCurrency(s.basicWithGrade)}</p>
+                    ${SALARY_DATABASE[document.getElementById('teacherLevel').value].classes[document.getElementById('teacherClass').value].gradeWarning ? `<p class="mt-2 p-2 rounded bg-rose-50 text-rose-700 dark:bg-rose-950/30 dark:text-rose-300">⚠️ ${SALARY_DATABASE[document.getElementById('teacherLevel').value].classes[document.getElementById('teacherClass').value].gradeWarning}</p>` : ''}
+                </div>
+                <hr class="dark:border-slate-700">
+                <div class="space-y-1">
+                    <p class="font-bold text-emerald-600 dark:text-emerald-400">भत्ताहरू (Allowances):</p>
+                    <p>• महँगी भत्ता = ${formatCurrency(s.mahangiAmount)}</p>
+                    <p>• प्रोत्साहन भत्ता (${formatNumberOnly(s.protsahanPct)}% आधारभूत) = ${formatCurrency(s.protsahanAmount)}</p>
+                    <p>• अन्य थप भत्ताहरू = ${formatCurrency(s.totalOtherAllow)}</p>
+                    <p class="font-semibold text-slate-800 dark:text-white pt-1">=> कुल सकल मासिक तलब = ${formatCurrency(s.grossMonthlySalary)}</p>
+                </div>
+                <hr class="dark:border-slate-700">
+                <div class="space-y-1">
+                    <p class="font-bold text-rose-600 dark:text-rose-400">कट्टीहरू (Deductions):</p>
+                    <p>• सञ्चय कोष (EPF) = ${formatCurrency(s.epfDeduction)}</p>
+                    <p>• नागरिक लगानी कोष (CIT) = ${formatCurrency(s.citDeduction)}</p>
+                    <p>• सावधिक बीमा कट्टी = ${formatCurrency(s.insuranceDeduction)}</p>
+                    <p>• अनुमानित कर = ${formatCurrency(s.taxDeduction)}</p>
+                    <p class="font-semibold text-rose-600 dark:text-rose-400 pt-1">=> कुल मासिक कट्टी = ${formatCurrency(s.totalDeductions)}</p>
+                </div>
+                <div class="p-3 bg-amber-50 dark:bg-amber-900/30 rounded-lg border border-amber-300 dark:border-amber-700 font-bold text-amber-900 dark:text-amber-200">
+                    अन्तिम हातमा आउने मासिक तलब = ${formatCurrency(s.grossMonthlySalary)} - ${formatCurrency(s.totalDeductions)} = ${formatCurrency(s.netMonthlySalary)}
+                </div>
+            `;
+
+            document.getElementById('breakdownContent').innerHTML = html;
+            document.getElementById('breakdownModal').classList.remove('hidden');
+        }
+
+        function closeBreakdownModal() {
+            document.getElementById('breakdownModal').classList.add('hidden');
+        }
+
+        function renderSalaryTable() {
+            const tbody = document.getElementById('salaryTableBody');
+            tbody.innerHTML = '';
+
+            const searchTerm = document.getElementById('tableSearchInput')?.value.toLowerCase() || '';
+            const levelFilter = document.getElementById('tableLevelFilter')?.value || 'all';
+
+            for (const levelKey in SALARY_DATABASE) {
+                if (levelFilter !== 'all' && levelFilter !== levelKey) continue;
+
+                const levelObj = SALARY_DATABASE[levelKey];
+                for (const classKey in levelObj.classes) {
+                    const cls = levelObj.classes[classKey];
+                    const fullTitle = `${levelObj.title} ${cls.title}`.toLowerCase();
+
+                    if (searchTerm && !fullTitle.includes(searchTerm)) continue;
+
+                    const gradeRate = Number.isFinite(cls.gradeRate) ? cls.gradeRate : ((cls.maxSalary - cls.basic) / cls.grades);
+
+                    const tr = document.createElement('tr');
+                    tr.className = "hover:bg-slate-50 dark:hover:bg-slate-700/50 transition border-b border-slate-200 dark:border-slate-700";
+                    tr.innerHTML = `
+                        <td class="p-3 font-semibold text-slate-800 dark:text-slate-200">${levelObj.title}</td>
+                        <td class="p-3 text-slate-700 dark:text-slate-300">${cls.title}</td>
+                        <td class="p-3 text-right font-medium text-slate-900 dark:text-white">${formatCurrency(cls.basic)}</td>
+                        <td class="p-3 text-center text-slate-700 dark:text-slate-300">${formatNumberOnly(cls.grades)}</td>
+                        <td class="p-3 text-right text-amber-600 dark:text-amber-400">${formatCurrency(gradeRate)}</td>
+                        <td class="p-3 text-right font-bold text-emerald-600 dark:text-emerald-400">${formatCurrency(cls.maxSalary)}</td>
+                    `;
+                    tbody.appendChild(tr);
+                }
+            }
+        }
+
+        function filterSalaryTable() {
+            renderSalaryTable();
+        }
+
+        function saveCurrentCalculation() {
+            const s = currentCalcState;
+            if (!s.levelTitle) return;
+
+            const savedList = JSON.parse(localStorage.getItem('teacherSalary_saved') || '[]');
+            const newItem = {
+                id: Date.now(),
+                title: `${s.levelTitle} (${s.classTitle})`,
+                grade: `${s.gradeCount} ग्रेड`,
+                netSalary: s.netMonthlySalary,
+                date: new Date().toLocaleDateString('ne-NP'),
+                state: { ...s }
+            };
+
+            savedList.unshift(newItem);
+            if (savedList.length > 6) savedList.pop(); // keep last 6
+
+            localStorage.setItem('teacherSalary_saved', JSON.stringify(savedList));
+            renderSavedCalculations();
+
+            showToast('गणना सफलतापूर्वक सुरक्षित गरियो!');
+        }
+
+        function renderSavedCalculations() {
+            const container = document.getElementById('savedCalculationsList');
+            const savedList = JSON.parse(localStorage.getItem('teacherSalary_saved') || '[]');
+
+            if (savedList.length === 0) {
+                container.innerHTML = `
+                    <p class="text-xs text-slate-400 col-span-full py-4 text-center italic">
+                        हालसम्म कुनै पनि गणना सुरक्षित गरिएको छैन। "सुरक्षित गर्नुहोस्" बटन थिची बचत गर्नुहोस्।
+                    </p>
+                `;
+                return;
+            }
+
+            container.innerHTML = '';
+            savedList.forEach(item => {
+                const card = document.createElement('div');
+                card.className = "bg-slate-50 dark:bg-slate-900/80 p-3.5 rounded-xl border border-slate-200 dark:border-slate-700 flex justify-between items-center";
+                card.innerHTML = `
+                    <div>
+                        <h5 class="text-xs font-bold text-slate-900 dark:text-white">${item.title}</h5>
+                        <p class="text-[11px] text-slate-500">${item.grade} | ${item.date}</p>
+                        <p class="text-xs font-extrabold text-emerald-600 dark:text-emerald-400 mt-1">${formatCurrency(item.netSalary)}/महिना</p>
+                    </div>
+                    <button onclick="deleteSavedItem(${item.id})" class="text-slate-400 hover:text-rose-500 p-1 text-xs" title="हटाउनुहोस्">
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function deleteSavedItem(id) {
+            let savedList = JSON.parse(localStorage.getItem('teacherSalary_saved') || '[]');
+            savedList = savedList.filter(i => i.id !== id);
+            localStorage.setItem('teacherSalary_saved', JSON.stringify(savedList));
+            renderSavedCalculations();
+        }
+
+        function clearSavedCalculations() {
+            localStorage.removeItem('teacherSalary_saved');
+            renderSavedCalculations();
+        }
+
+        function printSalaryReport() {
+            window.print();
+        }
+
+        function downloadPDFReport() {
+            // jsPDF's default fonts do not reliably render Devanagari.
+            // Use the browser's print engine so Nepali Unicode renders correctly; choose "Save as PDF".
+            const s = currentCalcState;
+            if (!s.levelTitle) return;
+            const report = `
+                <html lang="ne"><head><meta charset="UTF-8"><title>शिक्षक तलब विवरण</title>
+                <style>body{font-family:Arial,"Noto Sans Devanagari",sans-serif;padding:32px;color:#111}h1{color:#003893}table{width:100%;border-collapse:collapse;margin-top:20px}td{padding:9px;border-bottom:1px solid #ddd}.total{font-weight:700;font-size:18px}.muted{color:#666;font-size:12px;margin-top:20px}</style></head>
+                <body><h1>नेपाल सरकारी शिक्षक तलब क्याल्कुलेटर</h1>
+                <p>आर्थिक वर्ष ${CURRENT_FISCAL_YEAR}</p>
+                <p><b>${s.levelTitle} — ${s.classTitle}</b> | ${formatNumberOnly(s.gradeCount)} ग्रेड</p>
+                <table>
+                <tr><td>आधारभूत तलब</td><td>${formatCurrency(s.basicSalary)}</td></tr>
+                <tr><td>ग्रेड रकम</td><td>${formatCurrency(s.gradeAmount)}</td></tr>
+                <tr><td>महँगी भत्ता</td><td>${formatCurrency(s.mahangiAmount)}</td></tr>
+                <tr><td>प्रोत्साहन भत्ता</td><td>${formatCurrency(s.protsahanAmount)}</td></tr>
+                <tr><td>अन्य भत्ता</td><td>${formatCurrency(s.totalOtherAllow)}</td></tr>
+                <tr><td>कुल सकल मासिक तलब</td><td class="total">${formatCurrency(s.grossMonthlySalary)}</td></tr>
+                <tr><td>कुल कट्टी</td><td>${formatCurrency(s.totalDeductions)}</td></tr>
+                <tr><td>हातमा आउने अनुमानित तलब</td><td class="total">${formatCurrency(s.netMonthlySalary)}</td></tr>
+                </table><p class="muted">निर्माता: छविलाल के.सी. · यो सरकारी आधिकारिक वेबसाइट होइन। अन्तिम भुक्तानीका लागि सम्बन्धित कार्यालयको कागजातलाई प्राथमिकता दिनुहोस्।</p></body></html>`;
+            const win = window.open('', '_blank', 'width=900,height=700');
+            if (!win) { showToast('पप-अप ब्लक भएको छ। कृपया ब्राउजरमा पप-अप अनुमति दिनुहोस्।'); return; }
+            win.document.write(report); win.document.close();
+            win.focus(); setTimeout(() => win.print(), 350);
+        }
+
+        function shareCalculationLink() {
+            const level = document.getElementById('teacherLevel').value;
+            const classVal = document.getElementById('teacherClass').value;
+            const grade = document.getElementById('gradeCountSelect').value;
+
+            const url = new URL(window.location.href);
+            url.searchParams.set('level', level);
+            url.searchParams.set('class', classVal);
+            url.searchParams.set('grade', grade);
+
+            if (navigator.share) {
+                navigator.share({
+                    title: 'नेपाल सरकारी शिक्षक तलब क्याल्कुलेटर',
+                    text: `मेरो शिक्षक तलब गणना परिणाम: ${formatCurrency(currentCalcState.netMonthlySalary)}/महिना`,
+                    url: url.href
+                }).catch(() => {});
+            } else if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(url.href).then(() => {
+                    showToast('लिङ्क क्लिपबोर्डमा कपी गरियो!');
+                }).catch(() => fallbackCopy(url.href));
+            } else {
+                fallbackCopy(url.href);
+            }
+        }
+
+        function fallbackCopy(text) {
+            const input = document.createElement('textarea');
+            input.value = text; input.style.position = 'fixed'; input.style.opacity = '0';
+            document.body.appendChild(input); input.select();
+            try { document.execCommand('copy'); showToast('लिङ्क कपी गरियो!'); }
+            catch (e) { prompt('यो लिङ्क कपी गर्नुहोस्:', text); }
+            input.remove();
+        }
+
+        function confirmReset() {
+            document.getElementById('confirmResetModal').classList.remove('hidden');
+        }
+
+        function closeResetModal() {
+            document.getElementById('confirmResetModal').classList.add('hidden');
+        }
+
+        function executeReset() {
+            document.getElementById('teacherLevel').value = 'primary';
+            onLevelChange();
+            document.getElementById('appointmentDate').value = '';
+            document.getElementById('gradeCountSelect').value = 0;
+            document.getElementById('mahangiToggle').checked = true;
+            document.getElementById('protsahanToggle').checked = true;
+            document.getElementById('protsahanPercent').value = 10;
+            document.getElementById('includeFestivalMonthlyToggle').checked = false;
+            document.getElementById('durgamAllowance').value = 0;
+            document.getElementById('sthaniyaAllowance').value = 0;
+            document.getElementById('visheshAllowance').value = 0;
+            document.getElementById('otherAllowance').value = 0;
+            document.getElementById('epfPercent').value = 10;
+            document.getElementById('citAmount').value = 0;
+            document.getElementById('insuranceAmount').value = 400;
+            document.getElementById('taxToggle').checked = true;
+            document.getElementById('taxAmount').value = 1;
+
+            calculateSalary();
+            closeResetModal();
+            showToast('सबै विवरण रिसेट गरियो!');
+        }
+
+        function showToast(msg) {
+            const toast = document.createElement('div');
+            toast.className = 'fixed bottom-5 right-5 bg-slate-900 text-white px-4 py-2.5 rounded-xl shadow-2xl text-xs z-50 animate-bounce flex items-center gap-2 border border-slate-700';
+            toast.innerHTML = `<i class="fa-solid fa-circle-check text-emerald-400"></i> ${msg}`;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 2500);
+        }
+
+        function loadUrlParams() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const level = urlParams.get('level');
+            const classVal = urlParams.get('class');
+            const grade = urlParams.get('grade');
+
+            if (level && SALARY_DATABASE[level]) {
+                document.getElementById('teacherLevel').value = level;
+                onLevelChange();
+                if (classVal && SALARY_DATABASE[level].classes[classVal]) {
+                    document.getElementById('teacherClass').value = classVal;
+                }
+                if (grade) {
+                    document.getElementById('gradeCountSelect').value = grade;
+                }
+            }
+        }
+
+        window.onload = function() {
+            initTheme();
+            const creatorLink = document.getElementById('creatorFacebookLink');
+            if (CREATOR_FACEBOOK_URL) creatorLink.href = CREATOR_FACEBOOK_URL;
+            else creatorLink.style.display = 'none';
+            document.getElementById('appointmentDate').max = new Date().toISOString().split('T')[0];
+            onLevelChange();
+            loadUrlParams();
+            renderSalaryTable();
+            renderSavedCalculations();
+        };
+    </script>
+</body>
+</html>
