@@ -842,10 +842,10 @@ table { min-width: 680px; }
             <div class="relative grid grid-cols-1 md:grid-cols-[180px_1fr] gap-6 items-center">
                 <div class="flex justify-center">
                     <div class="w-36 h-36 rounded-full p-1 bg-gradient-to-br from-nepal-red via-nepal-gold to-nepal-blue shadow-lg">
-                        <img src="Vina.jpg" alt="छविलाल के.सी." class="w-full h-full rounded-full object-cover bg-slate-100 dark:bg-slate-700"" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+                        <img src="Vina.jpg" alt="छविलाल के.सी." class="w-full h-full rounded-full object-cover bg-slate-100 dark:bg-slate-700" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
                         <div style="display:none" class="w-full h-full rounded-full items-center justify-center text-center bg-slate-100 dark:bg-slate-700 text-slate-500 dark:text-slate-300 font-bold text-sm px-3">छविलाल के.सी.</div>
                     </div>
-
+                </div>
                 <div>
                     <p class="text-xs font-bold tracking-widest uppercase text-nepal-red dark:text-rose-400 mb-1">निर्माताको बारेमा · About the Creator</p>
                     <h3 class="text-2xl font-extrabold text-slate-900 dark:text-white">छविलाल के.सी.</h3>
@@ -853,7 +853,6 @@ table { min-width: 680px; }
                     <p class="text-sm text-slate-600 dark:text-slate-300 leading-7 mt-3 max-w-3xl">
                         शिक्षक तथा प्रविधिप्रेमी छविलाल के.सी. द्वारा विकसित यो वेबसाइट नेपालका शिक्षकहरूलाई आफ्नो तलब, ग्रेड, भत्ता तथा कट्टीको अनुमानित विवरण सरल र सहज रूपमा गणना गर्न सहयोग गर्ने उद्देश्यले निर्माण गरिएको हो।
                     </p>
-                    
                     <div class="mt-4">
                         <a id="creatorFacebookLink" href="#" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-[#1877F2] hover:bg-[#0f66d0] text-white px-4 py-2.5 rounded-lg text-xs font-bold transition shadow-sm">
                             <i class="fa-brands fa-facebook-f"></i> Facebook मा जोडिनुहोस्
@@ -1252,9 +1251,16 @@ table { min-width: 680px; }
             const citDeduction = parseFloat(document.getElementById('citAmount').value) || 0;
             const insuranceDeduction = parseFloat(document.getElementById('insuranceAmount').value) || 0;
 
+            // BUG FIX: Social Security Tax (सामाजिक सुरक्षा कर) must be applied on the
+            // TAXABLE INCOME remaining AFTER the Provident Fund (EPF/सञ्चय कोष) and the
+            // CIT/Insurance contributions are deducted from gross — not on the full gross
+            // salary. The previous version taxed the full gross (including the portion
+            // that had already gone into PF/CIT/Insurance), which over-charged tax and
+            // produced an incorrect (too low) net/in-hand salary.
             const taxActive = document.getElementById('taxToggle').checked;
             const taxPct = parseFloat(document.getElementById('taxAmount').value) || 0;
-            const taxDeduction = taxActive ? (grossMonthlySalary * (taxPct / 100)) : 0;
+            const taxableIncomeForSST = Math.max(0, grossMonthlySalary - epfDeduction - citDeduction - insuranceDeduction);
+            const taxDeduction = taxActive ? (taxableIncomeForSST * (taxPct / 100)) : 0;
 
             const totalDeductions = epfDeduction + citDeduction + insuranceDeduction + taxDeduction;
 
@@ -1280,6 +1286,7 @@ table { min-width: 680px; }
                 epfDeduction,
                 citDeduction,
                 insuranceDeduction,
+                taxableIncomeForSST,
                 taxDeduction,
                 totalDeductions,
                 netMonthlySalary,
@@ -1360,7 +1367,8 @@ table { min-width: 680px; }
                     <p>• सञ्चय कोष (EPF) = ${formatCurrency(s.epfDeduction)}</p>
                     <p>• नागरिक लगानी कोष (CIT) = ${formatCurrency(s.citDeduction)}</p>
                     <p>• सावधिक बीमा कट्टी = ${formatCurrency(s.insuranceDeduction)}</p>
-                    <p>• अनुमानित कर = ${formatCurrency(s.taxDeduction)}</p>
+                    <p class="text-slate-500 pl-4">करयोग्य आय (Gross − EPF − CIT − बीमा) = ${formatCurrency(s.taxableIncomeForSST)}</p>
+                    <p>• अनुमानित सामाजिक सुरक्षा कर = ${formatCurrency(s.taxableIncomeForSST)} × ${formatNumberOnly(document.getElementById('taxAmount').value)}% = ${formatCurrency(s.taxDeduction)}</p>
                     <p class="font-semibold text-rose-600 dark:text-rose-400 pt-1">=> कुल मासिक कट्टी = ${formatCurrency(s.totalDeductions)}</p>
                 </div>
                 <div class="p-3 bg-amber-50 dark:bg-amber-900/30 rounded-lg border border-amber-300 dark:border-amber-700 font-bold text-amber-900 dark:text-amber-200">
